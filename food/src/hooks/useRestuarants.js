@@ -7,7 +7,7 @@ export const useRestuarants = (initialValue) => {
   const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
-    setRestuarants(initialValue)
+    searchRestuarants(initialValue)
   }, [])
 
   const searchRestuarants = async (keyword) => {

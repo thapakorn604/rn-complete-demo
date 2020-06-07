@@ -6,9 +6,13 @@ import RestuarantList from '../components/RestuarantList'
 
 import { useRestuarants } from '../hooks/useRestuarants'
 
-const SearchScreen = () => {
+const SearchScreen = ({ navigation }) => {
   const [keyword, setKeyword] = useState('')
-  const [searchRestuarants, restuarants, errorMessage] = useRestuarants('pasta')
+  const [searchRestuarants, restuarants, errorMessage] = useRestuarants('steak')
+
+  const filterRestuarantByPrice = (price) => {
+    return restuarants.filter((item) => item.price == price)
+  }
 
   return (
     <View style={styles.container}>
@@ -18,10 +22,21 @@ const SearchScreen = () => {
         onKeywordSubmit={() => searchRestuarants(keyword)}
       />
       {errorMessage != '' && <Text>{errorMessage}</Text>}
-      <Text>We found {restuarants.length} restuarants.</Text>
-      <RestuarantList header="Cost Effective" />
-      <RestuarantList header="Bit Pricer" />
-      <RestuarantList header="Big Spender!" />
+      <RestuarantList
+        dataSource={filterRestuarantByPrice('$')}
+        header="Cost Effective"
+        navigation={navigation}
+      />
+      <RestuarantList
+        dataSource={filterRestuarantByPrice('$$')}
+        header="Bit Pricer"
+        navigation={navigation}
+      />
+      <RestuarantList
+        dataSource={filterRestuarantByPrice('$$$')}
+        header="Big Spender!"
+        navigation={navigation}
+      />
     </View>
   )
 }
