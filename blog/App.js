@@ -7,7 +7,7 @@ import BlogScreen from './src/screens/BlogScreen'
 import CreateScreen from './src/screens/CreateScreen'
 import EditScreen from './src/screens/EditScreen'
 
-import { BlogProvider } from './src/context/BlogContext'
+import { Provider as BlogProvider } from './src/context/BlogContext'
 
 const navigator = createStackNavigator(
   {
