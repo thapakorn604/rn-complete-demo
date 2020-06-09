@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { EvilIcons } from '@expo/vector-icons'
 
 import { Context as BlogContext } from '../context/BlogContext'
 
@@ -12,10 +13,30 @@ const BlogScreen = ({ navigation }) => {
   return (
     <View>
       <Text>{blogPost.title}</Text>
+      <Text>{blogPost.content}</Text>
     </View>
   )
 }
 
-const styles = StyleSheet.create({})
+BlogScreen.navigationOptions = ({ navigation }) => {
+  return {
+    headerRight: () => {
+      return (
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Edit', { id: navigation.getParam('id') })
+          }>
+          <EvilIcons style={styles.editIcon} name="pencil" />
+        </TouchableOpacity>
+      )
+    },
+  }
+}
+
+const styles = StyleSheet.create({
+  editIcon: {
+    fontSize: 35,
+  },
+})
 
 export default BlogScreen

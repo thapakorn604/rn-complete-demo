@@ -12,9 +12,14 @@ const blogReducer = (state, { type, payload }) => {
         ...state,
         {
           id: Math.floor(Math.random() * 9999),
-          title: `Iced's Blogs #${state.length + 1}`,
+          title: payload.title,
+          content: payload.content,
         },
       ]
+    case EDIT_BLOGPOST:
+      return state.map((blogPost) =>
+        blogPost.id === payload.id ? payload : blogPost
+      )
     case DELETE_BLOGPOST:
       return state.filter((blogPost) => blogPost.id != payload)
     default:
@@ -23,14 +28,15 @@ const blogReducer = (state, { type, payload }) => {
 }
 
 const addBlogPost = (dispatch) => {
-  return () => {
-    dispatch({ type: ADD_BLOGPOST })
+  return (title, content, callback) => {
+    dispatch({ type: ADD_BLOGPOST, payload: { title, content } })
+    callback()
   }
 }
 
 const editBlogPost = (dispatch) => {
-  return () => {
-    dispatch({ type: EDIT_BLOGPOST })
+  return (id, title, content) => {
+    dispatch({ type: EDIT_BLOGPOST, payload: { id, title, content } })
   }
 }
 

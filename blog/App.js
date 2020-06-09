@@ -13,7 +13,18 @@ const navigator = createStackNavigator(
   {
     Home: HomeScreen,
     Blog: BlogScreen,
-    Create: CreateScreen,
+    Create: {
+      screen: CreateScreen,
+      navigationOptions: ({ navigation }) => ({
+        headerTitle: 'Post a Blog',
+      }),
+    },
+    Edit: {
+      screen: EditScreen,
+      navigationOptions: ({ navigation }) => ({
+        headerTitle: 'Edit a Blog',
+      }),
+    },
   },
   {
     initialRouteName: 'Home',
