@@ -13,6 +13,7 @@ const navigator = createStackNavigator(
   {
     Home: HomeScreen,
     Blog: BlogScreen,
+    Create: CreateScreen,
   },
   {
     initialRouteName: 'Home',
