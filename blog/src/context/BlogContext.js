@@ -8,7 +8,13 @@ const DELETE_BLOGPOST = 'DELETE_BLOGPOST'
 const blogReducer = (state, { type, payload }) => {
   switch (type) {
     case ADD_BLOGPOST:
-      return [...state, { title: `Blog #${state.length + 1}` }]
+      return [
+        ...state,
+        {
+          id: Math.floor(Math.random() * 9999),
+          title: `Iced's Blogs #${state.length + 1}`,
+        },
+      ]
     default:
       return state
   }
