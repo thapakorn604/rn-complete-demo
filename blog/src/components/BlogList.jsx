@@ -7,11 +7,12 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { Feather } from '@expo/vector-icons'
+import { withNavigation } from 'react-navigation'
 
 import { Context as BlogContext } from '../context/BlogContext'
 
-const BlogList = () => {
-  const { state } = useContext(BlogContext)
+const BlogList = ({ navigation }) => {
+  const { state, deleteBlogPost } = useContext(BlogContext)
 
   return (
     <View style={styles.container}>
@@ -20,14 +21,22 @@ const BlogList = () => {
         keyExtractor={(blogPost) => `${blogPost.id}`}
         renderItem={({ item }) => {
           return (
-            <View style={styles.itemRender}>
-              <Text style={styles.title}>
-                {item.title} - {item.id}
-              </Text>
-              <TouchableOpacity onPress={}>
-                <Feather style={styles.icon} name="trash" />
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Blog', { id: item.id })
+              }}>
+              <View style={styles.itemRender}>
+                <Text style={styles.title}>
+                  {item.title} - {item.id}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    deleteBlogPost(item.id)
+                  }}>
+                  <Feather style={styles.icon} name="trash" />
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
           )
         }}
       />
@@ -56,4 +65,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default BlogList
+export default withNavigation(BlogList)

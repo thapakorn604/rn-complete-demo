@@ -15,6 +15,8 @@ const blogReducer = (state, { type, payload }) => {
           title: `Iced's Blogs #${state.length + 1}`,
         },
       ]
+    case DELETE_BLOGPOST:
+      return state.filter((blogPost) => blogPost.id != payload)
     default:
       return state
   }
@@ -33,8 +35,8 @@ const editBlogPost = (dispatch) => {
 }
 
 const deleteBlogPost = (dispatch) => {
-  return () => {
-    dispatch({ type: DELETE_BLOGPOST })
+  return (id) => {
+    dispatch({ type: DELETE_BLOGPOST, payload: id })
   }
 }
 

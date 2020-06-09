@@ -4,13 +4,13 @@ import { View, StyleSheet, Button } from 'react-native'
 import { Context as BlogContext } from '../context/BlogContext'
 import BlogList from '../components/BlogList'
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const { addBlogPost } = useContext(BlogContext)
 
   return (
     <View>
       <Button title="Post" onPress={addBlogPost} />
-      <BlogList />
+      <BlogList navigation={navigation} />
     </View>
   )
 }

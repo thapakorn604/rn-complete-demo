@@ -12,6 +12,7 @@ import { Provider as BlogProvider } from './src/context/BlogContext'
 const navigator = createStackNavigator(
   {
     Home: HomeScreen,
+    Blog: BlogScreen,
   },
   {
     initialRouteName: 'Home',
