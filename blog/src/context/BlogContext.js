@@ -1,9 +1,8 @@
 import React, { createContext, useReducer } from 'react'
-import createDataContext from './createDataContext'
 
-const ADD_BLOGPOST = 'ADD_BLOGPOST'
-const EDIT_BLOGPOST = 'EDIT_BLOGPOST'
-const DELETE_BLOGPOST = 'DELETE_BLOGPOST'
+import createDataContext from './createDataContext'
+import jsonServer from '../api/jsonServer'
+import { ADD_BLOGPOST, EDIT_BLOGPOST, DELETE_BLOGPOST } from './constants'
 
 const blogReducer = (state, { type, payload }) => {
   switch (type) {

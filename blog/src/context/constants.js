@@ -1,0 +1,3 @@
+export const ADD_BLOGPOST = 'ADD_BLOGPOST'
+export const EDIT_BLOGPOST = 'EDIT_BLOGPOST'
+export const DELETE_BLOGPOST = 'DELETE_BLOGPOST'
