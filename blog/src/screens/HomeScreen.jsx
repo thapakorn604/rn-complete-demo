@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
@@ -6,6 +6,12 @@ import { Context as BlogContext } from '../context/BlogContext'
 import BlogList from '../components/BlogList'
 
 const HomeScreen = ({ navigation }) => {
+  const { getBlogPosts } = useContext(BlogContext)
+
+  useEffect(() => {
+    getBlogPosts()
+  }, [])
+
   return (
     <View>
       <BlogList navigation={navigation} />

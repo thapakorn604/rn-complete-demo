@@ -1,3 +1,9 @@
 {
-  "blogposts": []
+  "blogposts": [
+    {
+      "id": 1000,
+      "title": "Blog post from API",
+      "content": "I got fetched by jsonServer!"
+    }
+  ]
 }
