@@ -10,6 +10,7 @@ import {
 } from './constants'
 
 const blogReducer = (state, { type, payload }) => {
+  // ADD/EDIT/DELETE BLOG in reducer used to work when json server is not integrated.
   switch (type) {
     case ADD_BLOGPOST:
       return [
@@ -34,21 +35,25 @@ const blogReducer = (state, { type, payload }) => {
 }
 
 const addBlogPost = (dispatch) => {
-  return (title, content, callback) => {
-    dispatch({ type: ADD_BLOGPOST, payload: { title, content } })
+  return async (title, content, callback) => {
+    await jsonServer.post('/blogposts', { title, content })
+    // dispatch({ type: ADD_BLOGPOST, payload: { title, content } })
     callback()
   }
 }
 
 const editBlogPost = (dispatch) => {
-  return (id, title, content) => {
-    dispatch({ type: EDIT_BLOGPOST, payload: { id, title, content } })
+  return async (id, title, content, callback) => {
+    await jsonServer.put(`/blogposts/${id}`, { title, content })
+    // dispatch({ type: EDIT_BLOGPOST, payload: { id, title, content } })
+    callback()
   }
 }
 
 const deleteBlogPost = (dispatch) => {
-  return (id) => {
-    dispatch({ type: DELETE_BLOGPOST, payload: id })
+  return async (id) => {
+    await jsonServer.delete(`/blogposts/${id}`)
+    // dispatch({ type: DELETE_BLOGPOST, payload: id })
   }
 }
 
@@ -64,11 +69,3 @@ export const { Context, Provider } = createDataContext(
   { addBlogPost, editBlogPost, deleteBlogPost, getBlogPosts },
   []
 )
-
-// const initialBlogPosts = [
-//   { title: 'Blog #1' },
-//   { title: 'Blog #2' },
-//   { title: 'Blog #3' },
-//   { title: 'Blog #4' },
-//   { title: 'Blog #5' },
-// ]
