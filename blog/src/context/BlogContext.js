@@ -1,7 +1,5 @@
-import React, { createContext, useReducer } from 'react'
-
 import createDataContext from './createDataContext'
-import jsonServer from '../api/jsonServer'
+
 import {
   ADD_BLOGPOST,
   EDIT_BLOGPOST,
@@ -9,8 +7,29 @@ import {
   GET_BLOGPOSTS,
 } from './constants'
 
+//Intitial State
+
+const initialState = [
+  {
+    id: 1001,
+    title: 'BlogPost #1',
+    content: 'Content #1',
+  },
+  {
+    id: 1002,
+    title: 'BlogPost #2',
+    content: 'Content #2',
+  },
+  {
+    id: 1003,
+    title: 'BlogPost #3',
+    content: 'Content #3',
+  },
+]
+
+// Reducer
+
 const blogReducer = (state, { type, payload }) => {
-  // ADD/EDIT/DELETE BLOG in reducer used to work when json server is not integrated.
   switch (type) {
     case ADD_BLOGPOST:
       return [
@@ -34,38 +53,30 @@ const blogReducer = (state, { type, payload }) => {
   }
 }
 
+// Actions
+
 const addBlogPost = (dispatch) => {
-  return async (title, content, callback) => {
-    await jsonServer.post('/blogposts', { title, content })
-    // dispatch({ type: ADD_BLOGPOST, payload: { title, content } })
+  return (title, content, callback) => {
+    dispatch({ type: ADD_BLOGPOST, payload: { title, content } })
     callback()
   }
 }
 
 const editBlogPost = (dispatch) => {
-  return async (id, title, content, callback) => {
-    await jsonServer.put(`/blogposts/${id}`, { title, content })
-    // dispatch({ type: EDIT_BLOGPOST, payload: { id, title, content } })
+  return (id, title, content, callback) => {
+    dispatch({ type: EDIT_BLOGPOST, payload: { id, title, content } })
     callback()
   }
 }
 
 const deleteBlogPost = (dispatch) => {
-  return async (id) => {
-    await jsonServer.delete(`/blogposts/${id}`)
-    // dispatch({ type: DELETE_BLOGPOST, payload: id })
-  }
-}
-
-const getBlogPosts = (dispatch) => {
-  return async () => {
-    const response = await jsonServer.get('/blogposts')
-    dispatch({ type: GET_BLOGPOSTS, payload: response.data })
+  return (id) => {
+    dispatch({ type: DELETE_BLOGPOST, payload: id })
   }
 }
 
 export const { Context, Provider } = createDataContext(
   blogReducer,
-  { addBlogPost, editBlogPost, deleteBlogPost, getBlogPosts },
-  []
+  { addBlogPost, editBlogPost, deleteBlogPost },
+  initialState
 )

@@ -6,11 +6,7 @@ import { Context as BlogContext } from '../context/BlogContext'
 import BlogList from '../components/BlogList'
 
 const HomeScreen = ({ navigation }) => {
-  const { state, getBlogPosts } = useContext(BlogContext)
-
-  useEffect(() => {
-    getBlogPosts()
-  }, [state])
+  const { state } = useContext(BlogContext)
 
   return (
     <View>

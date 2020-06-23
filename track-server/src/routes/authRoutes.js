@@ -10,8 +10,10 @@ router.post('/signup', async (req, res) => {
   const { email, password } = req.body
 
   try {
+    console.log('body', email, password)
     const user = new User({ email, password })
     await user.save()
+    console.log('saved.')
     const token = jwt.sign({ userId: user._id }, 'MY_SECRET_KEY')
     res.send({ token })
   } catch (err) {
@@ -31,7 +33,7 @@ router.post('/signin', async (req, res) => {
   const user = await findOne({ email })
 
   if (!user) {
-    return res.status(404).send({ error: 'Sorry, the email not found.' })
+    res.status(404).send({ error: 'Sorry, the email not found.' })
   }
 
   try {
@@ -39,9 +41,7 @@ router.post('/signin', async (req, res) => {
     const token = jwt.sign({ userId: user._id }, 'MY_SECRET_KEY')
     res.send({ token })
   } catch (err) {
-    return res
-      .status(422)
-      .send({ error: 'Sorry, the password is not correct.' })
+    res.status(422).send({ error: 'Sorry, the password is not correct.' })
   }
 })
 

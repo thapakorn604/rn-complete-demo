@@ -31,7 +31,7 @@ mongoose.connection.on('error', (error) => {
 })
 
 app.get('/', requireAuth, (req, res) => {
-  res.send(`Your email: ${req.user.email}`)
+  return res.send(`Your email: ${req.user.email}`)
 })
 
 app.listen(3000, () => {
