@@ -63,7 +63,9 @@ const MovieList = ({ dataSource, total, page, keyword, navigation }) => {
           style={styles.list}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => `${item.id}${index}`}
-          data={state.dataSource}
+          data={
+            total && page && keyword != null ? state.dataSource : dataSource
+          }
           refreshing={isLoading}
           onEndReached={getMoreMovies}
           onEndReachedThreshold={0.5}

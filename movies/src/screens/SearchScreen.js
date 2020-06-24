@@ -17,12 +17,12 @@ const SearchScreen = ({ navigation }) => {
   const { state } = useContext(MoviesContext)
   const [keyword, setKeyword] = useState('')
   const [keywords, setKeywords] = useState([])
-  const [isDisabled, setDisabled] = useState(state.length == 0)
   const [searchMovies] = useMovies()
 
-  // useEffect(() => {
-  //   navigation.setParams({ isDisabled })
-  // }, [isDisabled])
+  useEffect(() => {
+    const isDisabled = state.length == 0 ? true : false
+    navigation.setParams({ isDisabled })
+  }, [state])
 
   const callAlert = () => {
     Alert.alert('Error', errorMessage, [{ text: 'OK', onPress: () => {} }], {
@@ -42,7 +42,6 @@ const SearchScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {console.log(navigation)}
       <SearchBar
         keyword={keyword}
         onKeywordChange={(newKeyword) => setKeyword(newKeyword)}
@@ -86,13 +85,18 @@ const SearchScreen = ({ navigation }) => {
 }
 
 SearchScreen.navigationOptions = ({ navigation }) => {
-  //const { isDisabled } = navigation.state.params
+  let disabled = true
+  if (navigation.state.params != null) {
+    const { isDisabled } = navigation.state.params
+    disabled = isDisabled
+  }
+
   return {
     headerRight: () => {
       return (
         <Button
           title="Favourite"
-          disabled={true}
+          disabled={disabled}
           onPress={() => navigation.navigate('Favourite')}
         />
       )

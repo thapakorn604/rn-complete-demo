@@ -17,6 +17,7 @@ const FavouriteScreen = ({ navigation }) => {
           </Text>
         </View>
       )}
+      {console.log(state)}
       <MovieList dataSource={state} navigation={navigation} />
     </View>
   )

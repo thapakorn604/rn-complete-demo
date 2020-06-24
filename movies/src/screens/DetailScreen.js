@@ -44,7 +44,10 @@ const DetailScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.touchable}
             onPress={() =>
-              removeFavourite(movie.id, () => setFavourite(false))
+              removeFavourite(movie.id, () => {
+                console.log(state.length)
+                setFavourite(false)
+              })
             }>
             <Text style={styles.buttonText}>Unfavourite</Text>
           </TouchableOpacity>
