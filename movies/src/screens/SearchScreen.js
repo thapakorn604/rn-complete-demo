@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native'
+import { SearchBar } from 'react-native-elements'
 
-import SearchBar from '../components/SearchBar'
 import { useMovies } from '../hooks/useMovies'
 import { Context as MoviesContext } from '../contexts/MoviesContext'
 
@@ -17,6 +17,7 @@ const SearchScreen = ({ navigation }) => {
   const { state } = useContext(MoviesContext)
   const [keyword, setKeyword] = useState('')
   const [keywords, setKeywords] = useState([])
+  const [isSearching, setSearching] = useState(false)
   const [searchMovies] = useMovies()
 
   useEffect(() => {
@@ -40,22 +41,32 @@ const SearchScreen = ({ navigation }) => {
       .slice(0, 5)
   }
 
+  const startSearch = (keyword, page) => {
+    setSearching(true)
+    searchMovies(
+      keyword,
+      page,
+      ({ results, total_pages, page }) => {
+        setKeywords([keyword, ...keywords])
+        setSearching(false)
+        navigateToResult(results, total_pages, page, keyword)
+      },
+      () => callAlert()
+    )
+  }
+
   return (
     <View style={styles.container}>
       <SearchBar
-        keyword={keyword}
-        onKeywordChange={(newKeyword) => setKeyword(newKeyword)}
-        onKeywordSubmit={() => {
-          searchMovies(
-            keyword,
-            1,
-            ({ results, total_pages, page }) => {
-              setKeywords([keyword, ...keywords])
-              navigateToResult(results, total_pages, page, keyword)
-            },
-            () => callAlert()
-          )
-        }}
+        platform="ios"
+        placeholder="Begin search..."
+        returnKeyType="search"
+        autoCorrect={false}
+        showLoading={isSearching}
+        autoCapitalize="none"
+        onChangeText={(newKeyword) => setKeyword(newKeyword)}
+        value={keyword}
+        onSubmitEditing={() => startSearch(keyword, 1)}
       />
 
       <FlatList
@@ -63,16 +74,7 @@ const SearchScreen = ({ navigation }) => {
         keyExtractor={(item, index) => `${item}${index}`}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity
-              onPress={() => {
-                searchMovies(
-                  item,
-                  1,
-                  ({ results, total_pages, page }) =>
-                    navigateToResult(results, total_pages, page, keyword),
-                  () => callAlert()
-                )
-              }}>
+            <TouchableOpacity onPress={() => startSearch(item, 1)}>
               <View style={styles.itemRender}>
                 <Text>{item}</Text>
               </View>

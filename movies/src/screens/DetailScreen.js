@@ -45,7 +45,6 @@ const DetailScreen = ({ navigation }) => {
             style={styles.touchable}
             onPress={() =>
               removeFavourite(movie.id, () => {
-                console.log(state.length)
                 setFavourite(false)
               })
             }>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Text,
   View,
@@ -24,6 +24,10 @@ const MovieList = ({ dataSource, total, page, keyword, navigation }) => {
   const [state, setState] = useState(initialState)
   const [isLoading, setLoading] = useState(false)
   const [searchMovies] = useMovies()
+
+  useEffect(() => {
+    setState({ dataSource, total, page, keyword })
+  }, [dataSource])
 
   const callAlert = () => {
     Alert.alert('Error', errorMessage, [{ text: 'OK', onPress: () => {} }], {

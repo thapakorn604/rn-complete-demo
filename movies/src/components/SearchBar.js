@@ -7,6 +7,7 @@ const SearchBar = ({ keyword, onKeywordChange, onKeywordSubmit }) => (
     <Feather style={styles.searchIcon} name="search" />
     <TextInput
       style={styles.textInput}
+      keyboardType="url"
       placeholder="Search"
       value={keyword}
       autoCapitalize="none"
