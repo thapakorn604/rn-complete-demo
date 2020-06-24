@@ -32,7 +32,6 @@ const MovieList = ({ dataSource, total, page, keyword, navigation }) => {
   }
 
   const getMoreMovies = () => {
-    console.log('start load more')
     if (state.total != state.page) {
       setLoading(true)
       setTimeout(() => {

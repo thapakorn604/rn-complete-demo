@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, FlatList, Image, Button } from 'react-native'
+import React from 'react'
+import { Text, View, StyleSheet, Button } from 'react-native'
 
 const DetailScreen = ({ navigation }) => {
   const { movie } = navigation.state.params
