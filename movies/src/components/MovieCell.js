@@ -2,7 +2,6 @@ import React from 'react'
 import { Text, View, StyleSheet, Image } from 'react-native'
 
 import { useMovies } from '../hooks/useMovies'
-import { color } from 'react-native-reanimated'
 
 const MovieCell = ({ movie }) => {
   const [, getMovieImage] = useMovies()

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import {
   Text,
   View,
@@ -11,11 +11,18 @@ import {
 
 import SearchBar from '../components/SearchBar'
 import { useMovies } from '../hooks/useMovies'
+import { Context as MoviesContext } from '../contexts/MoviesContext'
 
 const SearchScreen = ({ navigation }) => {
+  const { state } = useContext(MoviesContext)
   const [keyword, setKeyword] = useState('')
   const [keywords, setKeywords] = useState([])
+  const [isDisabled, setDisabled] = useState(state.length == 0)
   const [searchMovies] = useMovies()
+
+  // useEffect(() => {
+  //   navigation.setParams({ isDisabled })
+  // }, [isDisabled])
 
   const callAlert = () => {
     Alert.alert('Error', errorMessage, [{ text: 'OK', onPress: () => {} }], {
@@ -27,8 +34,15 @@ const SearchScreen = ({ navigation }) => {
     navigation.navigate('Result', { results, total_pages, page, keyword })
   }
 
+  const filterDisplayKeywords = () => {
+    return keywords
+      .filter((keyword, index) => keywords.indexOf(keyword) === index)
+      .slice(0, 5)
+  }
+
   return (
     <View style={styles.container}>
+      {console.log(navigation)}
       <SearchBar
         keyword={keyword}
         onKeywordChange={(newKeyword) => setKeyword(newKeyword)}
@@ -46,7 +60,7 @@ const SearchScreen = ({ navigation }) => {
       />
 
       <FlatList
-        data={keywords.slice(0, 5)}
+        data={filterDisplayKeywords()}
         keyExtractor={(item, index) => `${item}${index}`}
         renderItem={({ item }) => {
           return (
@@ -72,9 +86,16 @@ const SearchScreen = ({ navigation }) => {
 }
 
 SearchScreen.navigationOptions = ({ navigation }) => {
+  //const { isDisabled } = navigation.state.params
   return {
     headerRight: () => {
-      return <Button title="Favourite" />
+      return (
+        <Button
+          title="Favourite"
+          disabled={true}
+          onPress={() => navigation.navigate('Favourite')}
+        />
+      )
     },
   }
 }

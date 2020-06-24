@@ -52,8 +52,9 @@ const MovieList = ({ dataSource, total, page, keyword, navigation }) => {
     }
   }
 
-  const showIndicator = () =>
-    isLoading ? <ActivityIndicator size="large" /> : null
+  const showIndicator = () => {
+    return isLoading ? <ActivityIndicator size="large" /> : null
+  }
 
   return (
     dataSource.length != 0 && (
